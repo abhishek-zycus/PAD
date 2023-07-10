@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light bg-light">
+<nav class="navbar navbar-light bg-light shadow-sm">
   <div class="container">
     <a class="navbar-brand" routerLink="/">
       <img
@@ -8,8 +8,11 @@
         class="d-inline-block align-top"
         alt="logo"
       />
+      <span class="ms-3 fw-semibold text-secondary fs-6" *ngIf="!isMobile">{{
+        "Procurement Analytics Dashboard"
+      }}</span>
     </a>
-    <form class="form-inline">
+    <form class="form-inline" *ngIf="!isLoggedIn; else logout">
       <a
         routerLink="/login"
         class="me-4 link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-25-hover"
@@ -21,5 +24,12 @@
         >Register</a
       >
     </form>
+    <ng-template class="pe-auto" #logout>
+      <a
+        (click)="logoutUser()"
+        class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-25-hover"
+        >Logout</a
+      >
+    </ng-template>
   </div>
 </nav>

@@ -3,14 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MenubarModule } from 'primeng/menubar';
-import { AvatarModule } from 'primeng/avatar';
-import { ButtonModule } from 'primeng/button';
-import { MenuModule } from 'primeng/menu';
 import { HeaderComponent } from './component/header/header.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { FormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -18,16 +18,16 @@ import { RegisterComponent } from './pages/register/register.component';
     HeaderComponent,
     DashboardComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MenubarModule,
-    AvatarModule,
-    ButtonModule,MenuModule
+    FormsModule,
+    ToastModule,
+    BrowserAnimationsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [MessageService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
