@@ -1,6 +1,7 @@
 import { Component, DoCheck } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -8,8 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements DoCheck {
-  constructor(private messageService: MessageService, private router: Router) {
-    if (localStorage.getItem('current')) {
+  constructor(
+    private messageService: MessageService,
+    private router: Router,
+    private authService: AuthService
+  ) {
+    if (authService.currentUser.length) {
       router.navigate(['/']);
     }
   }
@@ -44,6 +49,45 @@ export class RegisterComponent implements DoCheck {
     return true;
   };
 
+  // sumitRegister(event: Event) {
+  //   event.preventDefault();
+  //   const { name, email, password, confirmPassword } = this.userData;
+  //   if (!this.isSubmitButtonDisabled()) {
+  //     if (!email.match(/^[\w\.-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z]+)+$/)) {
+  //       this.messageService.add({
+  //         severity: 'error',
+  //         summary: 'Error',
+  //         detail: 'Enter valid E-mail!',
+  //       });
+  //     } else {
+  //       if (password === confirmPassword) {
+  //         if (!localStorage.getItem(email)) {
+  //           localStorage.setItem(`${email}`, `${password},|${name}`);
+  //           localStorage.setItem('current', `${email}`);
+  //           this.router.navigate(['/']);
+  //           this.messageService.add({
+  //             severity: 'success',
+  //             summary: 'Success',
+  //             detail: 'Registered Successfully',
+  //           });
+  //         } else {
+  //           this.messageService.add({
+  //             severity: 'error',
+  //             summary: 'Error',
+  //             detail: 'Email is already registered!',
+  //           });
+  //         }
+  //       } else {
+  //         this.messageService.add({
+  //           severity: 'error',
+  //           summary: 'Error',
+  //           detail: 'Password and Confirm Password are not same!',
+  //         });
+  //       }
+  //     }
+  //   }
+  // }
+
   sumitRegister(event: Event) {
     event.preventDefault();
     const { name, email, password, confirmPassword } = this.userData;
@@ -56,9 +100,8 @@ export class RegisterComponent implements DoCheck {
         });
       } else {
         if (password === confirmPassword) {
-          if (!localStorage.getItem(email)) {
-            localStorage.setItem(`${email}`, `${password},|${name}`);
-            localStorage.setItem('current', `${email}`);
+          if (!this.authService.emailAlreadyExits(email)) {
+            this.authService.registeruser(email, password, name);
             this.router.navigate(['/']);
             this.messageService.add({
               severity: 'success',

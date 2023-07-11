@@ -1,4 +1,4 @@
-import { Component, DoCheck } from '@angular/core';
+import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -7,20 +7,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./app.component.css'],
   providers: [MessageService],
 })
-export class AppComponent implements DoCheck {
+export class AppComponent {
   constructor() {}
   title = 'PAD';
-
-  isAuthenticated: boolean = false;
-  checkAuth() {
-    if (
-      localStorage.getItem('current') &&
-      localStorage.getItem(localStorage.getItem('current') ?? '')
-    ) {
-      this.isAuthenticated = true;
-    }
-  }
-  ngDoCheck() {
-    this.checkAuth();
-  }
 }
