@@ -12,27 +12,39 @@
       <label for="usersname">Full Name *</label>
       <input
         type="text"
+        #flname="ngModel"
+        required
+        [class.is-invalid]="flname.invalid && flname.touched"
         class="form-control"
         id="usersname"
         aria-describedby="nameHelp"
-        placeholder="Enter Name"
+        placeholder="Enter your full name"
         [(ngModel)]="userData.name"
-        required="true"
-        name="name"
+        name="flname"
       />
+      <small class="helperText" *ngIf="flname.invalid && flname.touched"
+        >Name cannot be empty</small
+      >
     </div>
+
     <div class="mt-4 w-100 input-group-lg col col-sm-12 col-md-6 col-lg-6">
       <label for="exampleInputEmail1">Email address *</label>
       <input
         type="email"
+        #email="ngModel"
+        required
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+        [class.is-invalid]="email.invalid && email.touched"
         class="form-control"
         id="exampleInputEmail1"
         aria-describedby="emailHelp"
-        placeholder="Enter email"
+        placeholder="Example: jane@doe.com"
         [(ngModel)]="userData.email"
-        required="true"
         name="email"
       />
+      <small class="helperText" *ngIf="email.invalid && email.touched"
+        >Enter a valid email address</small
+      >
     </div>
     <div class="row w-100 mt-4">
       <div
@@ -41,13 +53,24 @@
         <label for="password">Password *</label>
         <input
           type="password"
+          #password="ngModel"
+          required
+          minlength="8"
+          [class.is-invalid]="password.invalid && password.touched"
           class="form-control"
           id="password"
-          placeholder="Password"
+          placeholder="Enter your password: min 8 characters"
           [(ngModel)]="userData.password"
-          required="true"
           name="password"
         />
+        <small class="helperText" *ngIf="password.pristine && password.touched"
+          >Password is required</small
+        >
+        <small
+          class="helperText"
+          *ngIf="password.invalid && password.touched && !password.pristine"
+          >Enter a password of atlleast 8 characters</small
+        >
       </div>
       <div
         class="form-group input-group-lg col col-sm-12 col-md-6 col-lg-6 pe-0"
@@ -55,15 +78,30 @@
         <label for="confirmPassword">Confirm Password *</label>
         <input
           type="password"
+          #confirmPassword="ngModel"
+          required
+          minlength="8"
+          required="userData.password===userData.confirmPassword"
+          [class.is-invalid]="
+            confirmPassword.invalid && confirmPassword.touched
+          "
           class="form-control"
           id="confirmPassword"
-          placeholder="Confirm Password"
+          placeholder="Confirm password"
           [(ngModel)]="userData.confirmPassword"
-          required="true"
-          name="confirmPsassword"
+          name="confirmPassword"
         />
+        <small
+          class="helperText"
+          *ngIf="
+            userData.password != userData.confirmPassword &&
+            !confirmPassword.pristine
+          "
+          >Password does not match</small
+        >
       </div>
     </div>
+
     <div
       class="w-100 mt-5 d-flex flex-row align-items-center justify-content-between"
     >

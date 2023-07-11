@@ -1,0 +1,8 @@
+
+.helperText{
+    color: red;
+}
+
+::placeholder{
+    color: rgb(185, 185, 185);
+}
