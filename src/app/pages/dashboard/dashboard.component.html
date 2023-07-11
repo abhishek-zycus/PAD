@@ -1,1 +1,30 @@
-<p>dashboard works!</p>
+<div class="bg-body-secondary w-100 h-100">
+  <div class="container d-flex justify-content-between pt-3">
+    <div class="justify-content-center w-75 bg-white p-5 rounded-5 me-3 pt-4">
+      <h4 class="text-secondary mb-5 text-center">
+        Welcome to Dashboard! {{ username }}
+      </h4>
+      <p-chart
+        type="line"
+        [data]="basicData"
+        [options]="basicOptions"
+      ></p-chart>
+    </div>
+    <div class="w-25">
+      <div class="p-3 rounded-5 bg-white mb-3">
+        <p-chart
+          type="pie"
+          [data]="dataPieChart"
+          [options]="optionsPieChart"
+        ></p-chart>
+      </div>
+      <div class="p-3 rounded-5 bg-white">
+        <p-chart
+          type="doughnut"
+          [data]="dataDoughnut"
+          [options]="optionsDoughnut"
+        ></p-chart>
+      </div>
+    </div>
+  </div>
+</div>

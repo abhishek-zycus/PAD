@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessageService } from 'primeng/api';
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MessageService } from 'primeng/api';
     FormsModule,
     ToastModule,
     BrowserAnimationsModule,
+    ChartModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],
