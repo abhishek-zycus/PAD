@@ -28,7 +28,7 @@ export class AuthService {
       }
     }
   }
-
+  // Rishabh
   emailAlreadyExits(email: string): boolean {
     if (this.users[email]) {
       return true;
