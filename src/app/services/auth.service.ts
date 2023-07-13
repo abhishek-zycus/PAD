@@ -1,15 +1,16 @@
-import { Injectable, DoCheck } from '@angular/core';
-import user from 'src/data/user';
+// Abhishek
+
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService implements DoCheck {
+export class AuthService {
   constructor() {}
 
   users: registerNS.IusersService = {};
   currentUser: string = '';
-
+  // Rishabh
   registeruser(email: string, pass: string, name: string): void {
     this.users = { ...this.users, [email]: `${pass},|${name}` };
     this.currentUser = email;
@@ -40,8 +41,5 @@ export class AuthService implements DoCheck {
 
   logoutUser(): void {
     this.currentUser = '';
-  }
-  ngDoCheck(): void {
-    console.log(this.users);
   }
 }

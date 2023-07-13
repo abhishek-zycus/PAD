@@ -1,3 +1,5 @@
+//Abhishek
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -13,7 +15,7 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/login']);
     }
 
-    console.log(this.authService.currentUser.length);
+    console.log(this.authService.users);
   }
 
   username = this.authService.getUsername();
