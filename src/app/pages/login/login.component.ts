@@ -4,6 +4,8 @@ import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import isAuthenticated from 'src/app/utils/isAuthenticated.utils';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,7 +17,7 @@ export class LoginComponent {
     private router: Router,
     private authService: AuthService
   ) {
-    if (this.authService.currentUser.length) {
+    if (isAuthenticated()) {
       router.navigate(['/']);
     }
   }
@@ -88,29 +90,29 @@ export class LoginComponent {
         detail: 'Enter valid E-mail!',
       });
     } else {
-      if (this.authService.emailAlreadyExits(email)) {
-        const isLoggedIn = this.authService.loginUser(email, password);
-        if (isLoggedIn) {
-          this.router.navigate(['/']);
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Login successful',
-          });
-        } else {
+      this.authService.loginUser(email, password).subscribe(
+        (data: any) => {
+          console.log(data);
+          if (data.success) {
+            localStorage.setItem('token', data.token);
+            this.router.navigate(['/']);
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Invalid Credentials!',
+            });
+          }
+        },
+        (error) => {
+          console.log(error);
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Credentials are incorrect',
+            detail: 'Invalid Credentials!',
           });
         }
-      } else {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'no existig account with the email',
-        });
-      }
+      );
     }
   }
 }

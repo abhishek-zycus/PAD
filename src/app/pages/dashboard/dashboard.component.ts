@@ -3,6 +3,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import isAuthenticated from 'src/app/utils/isAuthenticated.utils';
+import { DashboardService } from 'src/app/services/dashboard.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,16 +13,9 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  constructor(private router: Router, private authService: AuthService) {
-    if (!this.authService.currentUser.length) {
-      this.router.navigate(['/login']);
-    }
-
-    console.log(this.authService.users);
-  }
-
+  apiData: any;
   username = this.authService.getUsername();
-
+  title1: any = [];
   basicData: any;
 
   basicOptions: any;
@@ -30,29 +26,47 @@ export class DashboardComponent implements OnInit {
 
   dataDoughnut: any;
   optionsDoughnut: any;
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private dashboardService: DashboardService
+  ) {
+    if (!isAuthenticated()) {
+      this.router.navigate(['/login']);
+    } else {
+      this.dashboardService.getDashoardData().subscribe(
+        (data) => {
+          this.apiData = data;
+          this.title1 = this.getArrayByKey(data, 'companyName', 5);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  getArrayByKey(apiData: any, key: any, quantity: number) {
+    const data = apiData?.data?.map((item: any) => {
+      return item[key];
+    });
+    return data.slice(0, quantity);
+  }
+
   ngOnInit() {
+    console.log(this.title1);
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue(
       '--text-color-secondary'
     );
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
     this.basicData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: ['jan', 'feb', 'march', 'april', 'may', 'june', 'july'],
       datasets: [
         {
-          type: 'line',
-          label: 'Dataset 1',
-          borderColor: documentStyle.getPropertyValue('--blue-500'),
-          borderWidth: 2,
-          fill: false,
-          tension: 0.4,
-          data: [50, 25, 12, 48, 56, 76, 42],
-        },
-        {
           type: 'bar',
-          label: 'Dataset 2',
+          label: 'Due Payment',
           backgroundColor: documentStyle.getPropertyValue('--green-500'),
           data: [21, 84, 24, 75, 37, 65, 34],
           borderColor: 'white',
@@ -60,7 +74,7 @@ export class DashboardComponent implements OnInit {
         },
         {
           type: 'bar',
-          label: 'Dataset 3',
+          label: 'Expected Payment',
           backgroundColor: documentStyle.getPropertyValue('--yellow-500'),
           data: [41, 52, 24, 74, 23, 21, 32],
         },

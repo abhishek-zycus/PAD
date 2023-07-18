@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import isMobile from 'src/app/utils/isMobile.utils';
 import { AuthService } from 'src/app/services/auth.service';
+import isAuthenticated from 'src/app/utils/isAuthenticated.utils';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -31,7 +32,7 @@ export class HeaderComponent implements DoCheck {
   }
 
   setIsLoggedin() {
-    if (this.authService.currentUser.length) {
+    if (isAuthenticated()) {
       this.isLoggedIn = true;
     } else {
       this.isLoggedIn = false;

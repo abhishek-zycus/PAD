@@ -1,12 +1,14 @@
 // Abhishek
-
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import endpoints from './endpoints';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   users: registerNS.IusersService = {};
   currentUser: string = '';
@@ -16,17 +18,8 @@ export class AuthService {
     this.currentUser = email;
   }
 
-  loginUser(email: string, pass: string): boolean {
-    if (!this.users[email]) {
-      return false;
-    } else {
-      if (this.users[email]?.split(',|')[0] === pass) {
-        this.currentUser = email;
-        return true;
-      } else {
-        return false;
-      }
-    }
+  loginUser(email: string, password: string): Observable<any> {
+    return this.http.post(endpoints.loginEndpoint, { email, password });
   }
   // Rishabh
   emailAlreadyExits(email: string): boolean {
@@ -40,6 +33,6 @@ export class AuthService {
   }
 
   logoutUser(): void {
-    this.currentUser = '';
+    localStorage.removeItem('token');
   }
 }

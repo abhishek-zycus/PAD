@@ -4,6 +4,7 @@ import { Component, DoCheck } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import isAuthenticated from 'src/app/utils/isAuthenticated.utils';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,7 @@ export class RegisterComponent implements DoCheck {
     private router: Router,
     private authService: AuthService
   ) {
-    if (authService.currentUser.length) {
+    if (isAuthenticated()) {
       router.navigate(['/']);
     }
   }

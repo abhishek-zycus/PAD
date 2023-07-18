@@ -12,6 +12,8 @@ import { ToastModule } from 'primeng/toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessageService } from 'primeng/api';
 import { ChartModule } from 'primeng/chart';
+import { HttpClientModule } from '@angular/common/http';
+import { NgHttpLoaderModule } from 'ng-http-loader';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { ChartModule } from 'primeng/chart';
     ToastModule,
     BrowserAnimationsModule,
     ChartModule,
+    HttpClientModule,
+    NgHttpLoaderModule.forRoot(),
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],
