@@ -26,6 +26,7 @@ export class RegisterComponent implements DoCheck {
     email: '',
     password: '',
     confirmPassword: '',
+    role: 'NORMAL',
   };
 
   clearInput = (): void => {
@@ -34,6 +35,7 @@ export class RegisterComponent implements DoCheck {
       email: '',
       password: '',
       confirmPassword: '',
+      role: 'NORMAL',
     };
   };
 
@@ -52,48 +54,9 @@ export class RegisterComponent implements DoCheck {
     return true;
   };
 
-  // sumitRegister(event: Event) {
-  //   event.preventDefault();
-  //   const { name, email, password, confirmPassword } = this.userData;
-  //   if (!this.isSubmitButtonDisabled()) {
-  //     if (!email.match(/^[\w\.-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z]+)+$/)) {
-  //       this.messageService.add({
-  //         severity: 'error',
-  //         summary: 'Error',
-  //         detail: 'Enter valid E-mail!',
-  //       });
-  //     } else {
-  //       if (password === confirmPassword) {
-  //         if (!localStorage.getItem(email)) {
-  //           localStorage.setItem(`${email}`, `${password},|${name}`);
-  //           localStorage.setItem('current', `${email}`);
-  //           this.router.navigate(['/']);
-  //           this.messageService.add({
-  //             severity: 'success',
-  //             summary: 'Success',
-  //             detail: 'Registered Successfully',
-  //           });
-  //         } else {
-  //           this.messageService.add({
-  //             severity: 'error',
-  //             summary: 'Error',
-  //             detail: 'Email is already registered!',
-  //           });
-  //         }
-  //       } else {
-  //         this.messageService.add({
-  //           severity: 'error',
-  //           summary: 'Error',
-  //           detail: 'Password and Confirm Password are not same!',
-  //         });
-  //       }
-  //     }
-  //   }
-  // }
-
   sumitRegister(event: Event) {
     event.preventDefault();
-    const { name, email, password, confirmPassword } = this.userData;
+    const { name, email, password, confirmPassword, role } = this.userData;
     if (!this.isSubmitButtonDisabled()) {
       if (!email.match(/^[\w\.-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z]+)+$/)) {
         this.messageService.add({
@@ -104,13 +67,31 @@ export class RegisterComponent implements DoCheck {
       } else {
         if (password === confirmPassword) {
           if (!this.authService.emailAlreadyExits(email)) {
-            this.authService.registeruser(email, password, name);
-            this.router.navigate(['/']);
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: 'Registered Successfully',
-            });
+            this.authService
+              .registeruser(email, password, name, role)
+              .subscribe(
+                (data: any) => {
+                  console.log(data);
+                  if (data.success) {
+                    localStorage.setItem('token', data.token);
+                    this.router.navigate(['/']);
+                    this.messageService.add({
+                      severity: 'success',
+                      summary: 'Success',
+                      detail: 'Registered Successfully',
+                    });
+                  }
+                },
+
+                (error) => {
+                  console.log(error);
+                  this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'Registration Failed!',
+                  });
+                }
+              );
           } else {
             this.messageService.add({
               severity: 'error',

@@ -3,5 +3,6 @@ declare namespace userNS {
     name: string;
     email: string;
     password: string;
+    role: string;
   }
 }

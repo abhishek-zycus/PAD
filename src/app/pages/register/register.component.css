@@ -6,3 +6,8 @@
 ::placeholder{
     color: rgb(185, 185, 185);
 }
+
+.choose-role {
+    padding: 0 !important;
+    width: calc(50% - 12px);
+}

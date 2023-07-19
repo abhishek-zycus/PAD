@@ -4,6 +4,7 @@ declare namespace registerNS {
     email: string;
     password: string;
     confirmPassword: string;
+    role: string;
   }
   interface IusersService {
     [key: string]: string;
