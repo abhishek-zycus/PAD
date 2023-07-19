@@ -1,0 +1,8 @@
+::ng-deep .pointer-cursor {
+  cursor: pointer !important;
+  z-index: 500;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
