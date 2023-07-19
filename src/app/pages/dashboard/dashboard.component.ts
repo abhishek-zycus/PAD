@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import isAuthenticated from 'src/app/utils/isAuthenticated.utils';
 import { DashboardService } from 'src/app/services/dashboard.service';
-import { error } from 'console';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +14,6 @@ import { error } from 'console';
 export class DashboardComponent implements OnInit {
   apiData: any;
   username = this.authService.getUsername();
-  title1: any = [];
   basicData: any;
 
   basicOptions: any;
@@ -36,8 +34,136 @@ export class DashboardComponent implements OnInit {
     } else {
       this.dashboardService.getDashoardData().subscribe(
         (data) => {
+          data = data.data;
           this.apiData = data;
-          this.title1 = this.getArrayByKey(data, 'companyName', 5);
+          const documentStyle = getComputedStyle(document.documentElement);
+          const textColor = documentStyle.getPropertyValue('--text-color');
+          const textColorSecondary = documentStyle.getPropertyValue(
+            '--text-color-secondary'
+          );
+          const surfaceBorder =
+            documentStyle.getPropertyValue('--surface-border');
+          this.basicData = {
+            labels: data.top5CompanyByDuePayment.companyName,
+            datasets: [
+              {
+                type: 'bar',
+                label: 'Due Payment',
+                backgroundColor: documentStyle.getPropertyValue('--green-500'),
+                data: data.top5CompanyByDuePayment.correspondingDuePayment,
+                borderColor: 'white',
+                borderWidth: 2,
+              },
+              {
+                type: 'bar',
+                label: 'Expected Payment',
+                backgroundColor: documentStyle.getPropertyValue('--yellow-500'),
+                data: data.top5CompanyByDuePayment.correspondingPayment,
+              },
+            ],
+          };
+
+          this.basicOptions = {
+            maintainAspectRatio: false,
+            aspectRatio: 0.6,
+            plugins: {
+              legend: {
+                labels: {
+                  color: textColor,
+                },
+              },
+            },
+            scales: {
+              x: {
+                ticks: {
+                  color: textColorSecondary,
+                },
+                grid: {
+                  color: surfaceBorder,
+                },
+              },
+              y: {
+                ticks: {
+                  color: textColorSecondary,
+                },
+                grid: {
+                  color: surfaceBorder,
+                },
+              },
+            },
+          };
+
+          const documentStylePieChart = getComputedStyle(
+            document.documentElement
+          );
+          const textColorPieChart =
+            documentStylePieChart.getPropertyValue('--text-color');
+
+          this.dataPieChart = {
+            labels: data.top5CompanyByPayment.companyName,
+            datasets: [
+              {
+                data: data.top5CompanyByPayment.correspondingPayment,
+                backgroundColor: [
+                  documentStylePieChart.getPropertyValue('--blue-500'),
+                  documentStylePieChart.getPropertyValue('--yellow-500'),
+                  documentStylePieChart.getPropertyValue('--green-500'),
+                ],
+                hoverBackgroundColor: [
+                  documentStylePieChart.getPropertyValue('--blue-400'),
+                  documentStylePieChart.getPropertyValue('--yellow-400'),
+                  documentStylePieChart.getPropertyValue('--green-400'),
+                ],
+              },
+            ],
+          };
+
+          this.optionsPieChart = {
+            plugins: {
+              legend: {
+                labels: {
+                  usePointStyle: true,
+                  color: textColorPieChart,
+                },
+              },
+            },
+          };
+
+          const documentStyleDoughnut = getComputedStyle(
+            document.documentElement
+          );
+          const textColorDoughnut =
+            documentStyleDoughnut.getPropertyValue('--text-color');
+
+          this.dataDoughnut = {
+            labels: data.top5CompanyByDuePayment.companyName,
+            datasets: [
+              {
+                data: data.top5CompanyByDuePayment.correspondingDuePayment,
+                backgroundColor: [
+                  documentStyleDoughnut.getPropertyValue('--blue-500'),
+                  documentStyleDoughnut.getPropertyValue('--yellow-500'),
+                  documentStyleDoughnut.getPropertyValue('--green-500'),
+                ],
+                hoverBackgroundColor: [
+                  documentStyleDoughnut.getPropertyValue('--blue-400'),
+                  documentStyleDoughnut.getPropertyValue('--yellow-400'),
+                  documentStyleDoughnut.getPropertyValue('--green-400'),
+                ],
+              },
+            ],
+          };
+
+          this.optionsDoughnut = {
+            cutout: '60%',
+            plugins: {
+              legend: {
+                labels: {
+                  color: textColorDoughnut,
+                },
+              },
+            },
+          };
         },
         (error) => {
           console.log(error);
@@ -46,137 +172,5 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  getArrayByKey(apiData: any, key: any, quantity: number) {
-    const data = apiData?.data?.map((item: any) => {
-      return item[key];
-    });
-    return data.slice(0, quantity);
-  }
-
-  ngOnInit() {
-    console.log(this.title1);
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue(
-      '--text-color-secondary'
-    );
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-    this.basicData = {
-      labels: ['jan', 'feb', 'march', 'april', 'may', 'june', 'july'],
-      datasets: [
-        {
-          type: 'bar',
-          label: 'Due Payment',
-          backgroundColor: documentStyle.getPropertyValue('--green-500'),
-          data: [21, 84, 24, 75, 37, 65, 34],
-          borderColor: 'white',
-          borderWidth: 2,
-        },
-        {
-          type: 'bar',
-          label: 'Expected Payment',
-          backgroundColor: documentStyle.getPropertyValue('--yellow-500'),
-          data: [41, 52, 24, 74, 23, 21, 32],
-        },
-      ],
-    };
-
-    this.basicOptions = {
-      maintainAspectRatio: false,
-      aspectRatio: 0.6,
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor,
-          },
-        },
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: textColorSecondary,
-          },
-          grid: {
-            color: surfaceBorder,
-          },
-        },
-        y: {
-          ticks: {
-            color: textColorSecondary,
-          },
-          grid: {
-            color: surfaceBorder,
-          },
-        },
-      },
-    };
-
-    const documentStylePieChart = getComputedStyle(document.documentElement);
-    const textColorPieChart =
-      documentStylePieChart.getPropertyValue('--text-color');
-
-    this.dataPieChart = {
-      labels: ['Product A', 'Product B', 'Product C'],
-      datasets: [
-        {
-          data: [540, 325, 702],
-          backgroundColor: [
-            documentStylePieChart.getPropertyValue('--blue-500'),
-            documentStylePieChart.getPropertyValue('--yellow-500'),
-            documentStylePieChart.getPropertyValue('--green-500'),
-          ],
-          hoverBackgroundColor: [
-            documentStylePieChart.getPropertyValue('--blue-400'),
-            documentStylePieChart.getPropertyValue('--yellow-400'),
-            documentStylePieChart.getPropertyValue('--green-400'),
-          ],
-        },
-      ],
-    };
-
-    this.optionsPieChart = {
-      plugins: {
-        legend: {
-          labels: {
-            usePointStyle: true,
-            color: textColorPieChart,
-          },
-        },
-      },
-    };
-
-    const documentStyleDoughnut = getComputedStyle(document.documentElement);
-    const textColorDoughnut =
-      documentStyleDoughnut.getPropertyValue('--text-color');
-
-    this.dataDoughnut = {
-      labels: ['A', 'B', 'C'],
-      datasets: [
-        {
-          data: [300, 50, 100],
-          backgroundColor: [
-            documentStyleDoughnut.getPropertyValue('--blue-500'),
-            documentStyleDoughnut.getPropertyValue('--yellow-500'),
-            documentStyleDoughnut.getPropertyValue('--green-500'),
-          ],
-          hoverBackgroundColor: [
-            documentStyleDoughnut.getPropertyValue('--blue-400'),
-            documentStyleDoughnut.getPropertyValue('--yellow-400'),
-            documentStyleDoughnut.getPropertyValue('--green-400'),
-          ],
-        },
-      ],
-    };
-
-    this.optionsDoughnut = {
-      cutout: '60%',
-      plugins: {
-        legend: {
-          labels: {
-            color: textColorDoughnut,
-          },
-        },
-      },
-    };
-  }
+  ngOnInit() {}
 }
