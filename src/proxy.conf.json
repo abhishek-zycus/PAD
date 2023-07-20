@@ -1,9 +1,9 @@
 {
   "/echo": {
-    "target": "http://localhost:5000/",
-    "secure": false,
+    "target": "https://pad-to09.onrender.com",
+    "secure": true,
     "changeOrigin": true,
     "togLevet": "debug"
   }
 }
-// "target": "https://pad-to09.onrender.com",
+// "target": "http://localhost:5000/",
