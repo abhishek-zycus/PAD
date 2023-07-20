@@ -13,24 +13,33 @@
         "Procurement Analytics Dashboard"
       }}</span>
     </a>
-    <form class="form-inline" *ngIf="!isLoggedIn; else logout">
+    <div>
       <a
-        routerLink="/login"
-        class="me-4 link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-25-hover"
-        >Login</a
+        *ngIf="showAdminPortalLink"
+        routerLink="/adminPortal"
+        class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-25-hover pointer-cursor me-3"
+        >Admin Portal</a
       >
-      <a
-        routerLink="/register"
-        class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-25-hover"
-        >Register</a
-      >
-    </form>
-    <ng-template #logout>
-      <a
-        (click)="logoutUser()"
-        class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-25-hover pointer-cursor"
-        >Logout</a
-      >
-    </ng-template>
+      <form class="form-inline" *ngIf="!isLoggedIn; else logout">
+        <a
+          routerLink="/login"
+          class="me-4 link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-25-hover"
+          >Login</a
+        >
+        <a
+          routerLink="/register"
+          class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-25-hover"
+          >Register</a
+        >
+      </form>
+
+      <ng-template #logout>
+        <a
+          (click)="logoutUser()"
+          class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-25-hover pointer-cursor"
+          >Logout</a
+        >
+      </ng-template>
+    </div>
   </div>
 </nav>

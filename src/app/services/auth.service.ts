@@ -4,47 +4,31 @@ import { HttpClient } from '@angular/common/http';
 import endpoints from './endpoints';
 import { Observable } from 'rxjs';
 import axios from 'axios';
+import getAccessToken from '../utils/getAccessToken';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   constructor(private http: HttpClient) {}
-
-  // async getUser(email: string, name: string, pass: string, role: string) {
-  //   return await axios({
-  //     url: "http://localhost:5000/api/register",
-  //     method: "POST",
-  //     headers: {
-  //       'Content-Type': "application/json",
-  //     },
-  //     data: {
-  //       email: email, password: pass, name: name, role:role,
-  //     }
-  //   })
-  // }
-  // async loginUserAxios(email: string, pass: string) {
-  //   return await axios({
-  //     url: "http://localhost:5000/api/login",
-  //     method: "POST",
-  //     headers: {
-  //       'Content-Type': "application/json",
-  //     },
-  //     data: {
-  //       email: email, password: pass
-  //     }
-  //   })
-  // }
-
+  showAdminPortalLink: boolean = false;
   users: registerNS.IusersService = {};
   currentUser: string = '';
   // Rishabh
-  registeruser(email: string, pass: string, name: string, role: string): Observable<any> {
+  registeruser(
+    email: string,
+    pass: string,
+    name: string,
+    role: string
+  ): Observable<any> {
     // console.log(this.getUser(email, name, pass, role));
-    console.log(email)
-    return this.http.post(endpoints.registerEndpoint, { email, name, password: pass, role });
-    this.users = { ...this.users, [email]: `${pass},|${name}` };
-    this.currentUser = email;
+    console.log(email);
+    return this.http.post(endpoints.registerEndpoint, {
+      email,
+      name,
+      password: pass,
+      role,
+    });
   }
 
   loginUser(email: string, password: string): Observable<any> {
@@ -59,6 +43,46 @@ export class AuthService {
 
   getUsername(): string {
     return this.users[this.currentUser]?.split(',|')[1];
+  }
+
+  roleEntry(
+    role: string,
+    isTotalContractVisible: boolean,
+    isAvgRevenueVisible: boolean,
+    isTotalDuePaymentVisible: boolean,
+    isTotalExpectedPaymentVisible: boolean,
+    canCreateRole: boolean
+  ): Observable<any> {
+    return this.http.post(
+      endpoints.roleEndpoint,
+      {
+        roleName: role,
+        permissions: {
+          isTotalContractVisible,
+          isAvgRevenueVisible,
+          isTotalDuePaymentVisible,
+          isTotalExpectedPaymentVisible,
+          canCreateRole,
+        },
+      },
+      {
+        headers: {
+          Authorization: getAccessToken(),
+        },
+      }
+    );
+  }
+
+  setShowAdminPortalLink(show: boolean): void {
+    this.showAdminPortalLink = show;
+  }
+
+  canUserCreateRole(): Observable<any> {
+    return this.http.get(endpoints.canCreateRoleEndpoint, {
+      headers: {
+        Authorization: getAccessToken(),
+      },
+    });
   }
 
   logoutUser(): void {

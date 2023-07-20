@@ -19,6 +19,7 @@ export class HeaderComponent implements DoCheck {
   ) {}
   isMobile: boolean = false;
   isLoggedIn: boolean = true;
+  showAdminPortalLink: boolean = false;
 
   logoutUser() {
     this.authService.logoutUser();
@@ -29,6 +30,7 @@ export class HeaderComponent implements DoCheck {
       detail: 'Logout successful',
     });
     this.isLoggedIn = false;
+    this.authService.setShowAdminPortalLink(false);
   }
 
   setIsLoggedin() {
@@ -42,5 +44,6 @@ export class HeaderComponent implements DoCheck {
   ngDoCheck() {
     this.setIsLoggedin();
     this.isMobile = isMobile();
+    this.showAdminPortalLink = this.authService.showAdminPortalLink;
   }
 }

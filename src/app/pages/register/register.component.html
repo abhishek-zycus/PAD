@@ -105,17 +105,23 @@
       <div
         class="mt-4 input-group-lg col col-sm-12 col-md-6 col-lg-6 choose-role"
       >
-        <label for="role">Role</label>
-        <select class="form-select" aria-label="Default select example" [(ngModel)]="userData.role" name="role" #role="ngModel">
-          <option value="NORMAL" selected>Normal</option>
-          <option value="ADMIN">Admin</option>
+        <label for="role">Role *</label>
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          [(ngModel)]="userData.role"
+          name="role"
+          #role="ngModel"
+        >
+          <option value="" selected disabled hidden>Please select role</option>
+          <option *ngFor="let role of roles" value="{{ role._id }}">
+            {{ role.roleName }}
+          </option>
+          <!-- <option value="ADMIN">Admin</option>
           <option value="ANALYST">Analyst</option>
-          <option value="SALES">Sales</option>
+          <option value="SALES">Sales</option> -->
         </select>
-         
-       
       </div>
-
     </div>
 
     <div

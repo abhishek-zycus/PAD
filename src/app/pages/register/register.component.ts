@@ -5,6 +5,8 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import isAuthenticated from 'src/app/utils/isAuthenticated.utils';
+import { RegisterService } from '../../services/register.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-register',
@@ -15,18 +17,30 @@ export class RegisterComponent implements DoCheck {
   constructor(
     private messageService: MessageService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private roleService: RegisterService
   ) {
     if (isAuthenticated()) {
       router.navigate(['/']);
+    } else {
+      this.roleService.getAllRoles().subscribe(
+        (data) => {
+          this.roles = data.roles;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
+
+  roles: any;
   userData: registerNS.IUserData = {
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
-    role: 'NORMAL',
+    role: '',
   };
 
   clearInput = (): void => {
@@ -35,20 +49,20 @@ export class RegisterComponent implements DoCheck {
       email: '',
       password: '',
       confirmPassword: '',
-      role: 'NORMAL',
+      role: '',
     };
   };
 
   isSubmitButtonDisabled = (): boolean => {
-    const { name, email, password, confirmPassword } = this.userData;
-    if (!name || !email || !password || !confirmPassword) {
+    const { name, email, password, confirmPassword, role } = this.userData;
+    if (!name || !email || !password || !confirmPassword || !role) {
       return true;
     }
     return false;
   };
   isClearButtonDisabled = (): boolean => {
-    const { name, email, password, confirmPassword } = this.userData;
-    if (name || email || password || confirmPassword) {
+    const { name, email, password, confirmPassword, role } = this.userData;
+    if (name || email || password || confirmPassword || role) {
       return false;
     }
     return true;

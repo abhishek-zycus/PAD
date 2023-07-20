@@ -14,6 +14,7 @@ import { MessageService } from 'primeng/api';
 import { ChartModule } from 'primeng/chart';
 import { HttpClientModule } from '@angular/common/http';
 import { NgHttpLoaderModule } from 'ng-http-loader';
+import { AdminPortalComponent } from './pages/admin-portal/admin-portal.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { NgHttpLoaderModule } from 'ng-http-loader';
     DashboardComponent,
     LoginComponent,
     RegisterComponent,
+    AdminPortalComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,26 +4,29 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { AdminPortalComponent } from './pages/admin-portal/admin-portal.component';
 
 const routes: Routes = [
-
-{
-  "path":"login",
-  "component":LoginComponent
-},
-{
-  "path":"register",
-  "component":RegisterComponent
-},
-{
-  "path":"",
-  "component":DashboardComponent
-}
-
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+  },
+  {
+    path: 'adminPortal',
+    component: AdminPortalComponent,
+  },
+  {
+    path: '',
+    component: DashboardComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

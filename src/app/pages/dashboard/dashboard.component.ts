@@ -32,6 +32,17 @@ export class DashboardComponent implements OnInit {
     if (!isAuthenticated()) {
       this.router.navigate(['/login']);
     } else {
+      this.authService.canUserCreateRole().subscribe(
+        (data) => {
+          if (data.success) {
+            this.authService.setShowAdminPortalLink(true);
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
       this.dashboardService.getDashoardData().subscribe(
         (data) => {
           data = data.data;
