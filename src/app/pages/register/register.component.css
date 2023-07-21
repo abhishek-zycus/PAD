@@ -1,13 +1,35 @@
-
-.helperText{
-    color: red;
+.helperText {
+  color: red;
 }
 
-::placeholder{
-    color: rgb(185, 185, 185);
+::placeholder {
+  color: rgb(185, 185, 185);
 }
 
 .choose-role {
-    padding: 0 !important;
-    width: calc(50% - 12px);
+  padding: 0 !important;
+  width: calc(50% - 12px);
+}
+
+@media screen and (max-width: 756px) {
+  .pageImage {
+    display: none !important;
+  }
+  .formContainer {
+    width: 100% !important;
+    padding-right: 0 !important;
+  }
+  .width50 {
+    width: 50% !important;
+  }
+  .pass {
+    padding-right: 0 !important;
+  }
+  .cpass {
+    padding-left: 0 !important;
+    margin-top: 1.5rem;
+  }
+  .choose-role {
+    width: 100%;
+  }
 }

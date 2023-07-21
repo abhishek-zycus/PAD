@@ -29,6 +29,11 @@ export class RegisterComponent implements DoCheck {
         },
         (error) => {
           console.log(error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to fetch roles',
+          });
         }
       );
     }

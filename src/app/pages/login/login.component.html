@@ -2,15 +2,15 @@
 <!-- Form validation and helper text by Rishabh -->
 <div class="d-flex flex-row w-100 h-100">
   <div
-    class="d-flex flex-column justify-content-center align-items-center w-50 border-end bg-primary-subtle"
+    class="d-flex flex-column justify-content-center align-items-center w-50 border-end bg-primary-subtle pageImage"
   >
     <img class="w-100 ill-shadow" src="../../../assets/illustartion.png" />
   </div>
   <form
-    class="d-flex flex-column justify-content-center align-items-center w-50 px-4"
+    class="row d-flex flex-column justify-content-center align-items-center px-4 w-50 formContainer"
     (ngSubmit)="sumitLogin($event)"
   >
-    <div class="w-100 input-group-lg col col-sm-12 col-md-6 col-lg-6">
+    <div class="w-100 input-group-lg col-sm-12 col-md-6 col-lg-12">
       <label for="exampleInputEmail1">Email address *</label>
       <input
         type="email"
@@ -29,9 +29,7 @@
       >
     </div>
 
-    <div
-      class="form-group input-group-lg col col-sm-12 col-md-12 col-lg-12 mt-4"
-    >
+    <div class="form-group input-group-lg col-sm-12 col-md-6 col-lg-12 mt-4">
       <label for="password">Password *</label>
       <input
         type="password"
@@ -54,7 +52,7 @@
     >
       <button
         type="button"
-        class="w-25 btn btn-danger me-3"
+        class="w-25 btn btn-danger me-3 width50"
         (click)="clearInput()"
         [disabled]="isClearButtonDisabled()"
       >
@@ -62,7 +60,7 @@
       </button>
       <button
         type="submit"
-        class="w-75 btn btn-primary"
+        class="w-75 btn btn-primary width50"
         [disabled]="isSubmitButtonDisabled()"
       >
         <i class="bi bi-box-arrow-in-right me-1"></i>Login

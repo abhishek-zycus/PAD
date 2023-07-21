@@ -1,0 +1,11 @@
+@media screen and (max-width: 756px) {
+  .flexColumn {
+    flex-direction: column !important;
+  }
+  .width100 {
+    width: 100% !important;
+  }
+  .marginBottom {
+    margin-bottom: 1.5rem;
+  }
+}

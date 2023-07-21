@@ -1,15 +1,15 @@
 <!-- Rishabh -->
 <div class="d-flex flex-row w-100 h-100">
   <div
-    class="d-flex flex-column justify-content-center align-items-center w-50 border-end bg-primary-subtle"
+    class="d-flex flex-column justify-content-center align-items-center w-50 border-end bg-primary-subtle pageImage"
   >
     <img class="w-100 ill-shadow" src="../../../assets/illustartion.png" />
   </div>
   <form
-    class="d-flex flex-column justify-content-center align-items-center w-50 px-4"
+    class="row d-flex flex-column justify-content-center align-items-center w-50 px-4 formContainer"
     (ngSubmit)="sumitRegister($event)"
   >
-    <div class="w-100 input-group-lg col col-sm-12 col-md-6 col-lg-6">
+    <div class="w-100 input-group-lg col-sm-12 col-md-6 col-lg-6">
       <label for="usersname">Full Name *</label>
       <input
         type="text"
@@ -28,7 +28,7 @@
       >
     </div>
 
-    <div class="mt-4 w-100 input-group-lg col col-sm-12 col-md-6 col-lg-6">
+    <div class="mt-4 w-100 input-group-lg col-sm-12 col-md-6 col-lg-6">
       <label for="exampleInputEmail1">Email address *</label>
       <input
         type="email"
@@ -49,7 +49,7 @@
     </div>
     <div class="row w-100 mt-4">
       <div
-        class="form-group input-group-lg col col-sm-12 col-md-6 col-lg-6 ps-0"
+        class="form-group input-group-lg col-sm-12 col-md-6 col-lg-6 ps-0 pass"
       >
         <label for="password">Password *</label>
         <input
@@ -74,7 +74,7 @@
         >
       </div>
       <div
-        class="form-group input-group-lg col col-sm-12 col-md-6 col-lg-6 pe-0"
+        class="form-group input-group-lg col-sm-12 col-md-6 col-lg-6 pe-0 cpass"
       >
         <label for="confirmPassword">Confirm Password *</label>
         <input
@@ -102,9 +102,7 @@
         >
       </div>
 
-      <div
-        class="mt-4 input-group-lg col col-sm-12 col-md-6 col-lg-6 choose-role"
-      >
+      <div class="mt-4 input-group-lg col-sm-12 col-md-6 col-lg-6 choose-role">
         <label for="role">Role *</label>
         <select
           class="form-select"
@@ -117,9 +115,6 @@
           <option *ngFor="let role of roles" value="{{ role._id }}">
             {{ role.roleName }}
           </option>
-          <!-- <option value="ADMIN">Admin</option>
-          <option value="ANALYST">Analyst</option>
-          <option value="SALES">Sales</option> -->
         </select>
       </div>
     </div>
@@ -129,7 +124,7 @@
     >
       <button
         type="button"
-        class="w-25 btn btn-danger me-3"
+        class="w-25 btn btn-danger me-3 width50"
         (click)="clearInput()"
         [disabled]="isClearButtonDisabled()"
       >
@@ -137,10 +132,10 @@
       </button>
       <button
         type="submit"
-        class="w-75 btn btn-primary"
+        class="w-75 btn btn-primary width50"
         [disabled]="isSubmitButtonDisabled()"
       >
-        <i class="bi bi-send-fill me-1"></i>Register
+        <i class="bi bi-send-fill me-1 width50"></i>Register
       </button>
     </div>
     <span class="mt-3">
